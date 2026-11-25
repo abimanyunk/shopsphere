@@ -1,0 +1,35 @@
+name: shopsphere-dev
+
+services:
+  postgres:
+    image: postgres:17.7-alpine
+    environment:
+      POSTGRES_DB: shopsphere
+      POSTGRES_USER: shopsphere
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shopsphere_local_only}
+    ports:
+      - '127.0.0.1:5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U shopsphere -d shopsphere']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - shopsphere_postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:8.4-alpine
+    command: ['redis-server', '--appendonly', 'yes']
+    ports:
+      - '127.0.0.1:6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - shopsphere_redis_data:/data
+
+volumes:
+  shopsphere_postgres_data:
+  shopsphere_redis_data:

@@ -1,0 +1,35 @@
+{
+  "name": "shopsphere",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DevOps-ready modular monolith e-commerce application",
+  "engines": {
+    "node": ">=24.11.0",
+    "npm": ">=11.0.0"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev:backend": "npm run dev --workspace @shopsphere/backend",
+    "dev:frontend": "npm run dev --workspace @shopsphere/frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace @shopsphere/backend",
+    "db:migrate": "npm run db:migrate --workspace @shopsphere/backend",
+    "db:seed": "npm run db:seed --workspace @shopsphere/backend"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "globals": "16.5.0",
+    "jsdom": "29.1.1",
+    "prettier": "3.10.1",
+    "typescript-eslint": "8.73.0"
+  }
+}
